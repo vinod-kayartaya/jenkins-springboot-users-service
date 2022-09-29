@@ -51,7 +51,7 @@ pipeline {
 				sh "docker tag ${DOCKER_REPO}/${DOCKER_IMG_NAME}:${env.BUILD_ID} ${DOCKER_REPO}/${DOCKER_IMG_NAME}:latest"         	
         	}
         }
-        /*
+
         stage('integration tests') {
         	steps {
         		echo 'running the tmp-user-service-container for integration testing...'
@@ -60,7 +60,7 @@ pipeline {
         		sh 'curl -i http://localhost:7070/api/users'
         	}
         }
-        */
+
         stage('docker publish') {
         	steps {
 	        	withDockerRegistry([credentialsId: 'docker_creds', url: '']) {
