@@ -62,9 +62,11 @@ pipeline {
         }
         
         stage('docker publish') {
-	        withDockerRegistry(credentialsId: 'docker_creds') {
-        		sh 'docker push ${DOCKER_REPO}/${DOCKER_IMG_NAME}:latest'
-        		sh 'docker push ${DOCKER_REPO}/${DOCKER_IMG_NAME}:${env.BUILD_ID}'
+        	steps {
+	        	withDockerRegistry(credentialsId: 'docker_creds') {
+        			sh 'docker push ${DOCKER_REPO}/${DOCKER_IMG_NAME}:latest'
+        			sh 'docker push ${DOCKER_REPO}/${DOCKER_IMG_NAME}:${env.BUILD_ID}'
+        		}
         	}
         }
         
