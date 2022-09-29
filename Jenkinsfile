@@ -23,7 +23,7 @@ pipeline {
         }
         */
                 
-        stage('test') {
+        stage('unit-test') {
             steps {
                 sh 'mvn test' 
             }
@@ -40,5 +40,24 @@ pipeline {
 				sh 'docker build -t user-service:latest .'        	
         	}
         }
+        
+        stage('integration tests') {
+        	steps {
+        		sh 'docker run -dp 7070:8080 --rm --name tmp-user-service-container user-service:latest'
+        		sh 'curl -i http://localhost:7070/api/users'
+        	}
+        }
+        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
