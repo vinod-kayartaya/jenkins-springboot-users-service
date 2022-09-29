@@ -3,7 +3,7 @@ pipeline {
     
     environment {
     	DOCKER_IMG_NAME = 'user-service'
-    	DOCKER_TMP_CONTAINER_NAME = 'tmp-user-service-container';
+    	DOCKER_TMP_CONTAINER_NAME = 'tmp-user-service-container'
     }
 
     stages {
@@ -46,7 +46,7 @@ pipeline {
         stage('dockerize') {
         	steps {
         		echo 'building the docker image for user-service...'
-				sh 'docker build -t ${DOCKER_IMG_NAME}:latest -t ${DOCKER_IMG_NAME}:${BUILD_ID} .'        	
+				sh 'docker build -t ${DOCKER_IMG_NAME}:latest -t ${DOCKER_IMG_NAME}:${env.BUILD_ID} .'        	
         	}
         }
         
@@ -64,7 +64,8 @@ pipeline {
 	post {
 	    always {
 	    	echo 'stopping and removing the tmp-user-service-container...'
-    		sh 'docker stop ${DOCKER_TMP_CONTAINER_NAME}'
+    		sh 'docker stop ${DOCKER_TMP_CONTAINER_NAME	}'
+    		sh 'docker rmi ${DOCKER_IMG_NAME}:latest ${DOCKER_IMG_NAME}:${env.BUILD_ID}'
     	}
 	}
 }
